@@ -16,9 +16,9 @@ public class PlacementValidationSystem : MonoBehaviour
     {
         cellsToUpdate = new List<Cell>();
         /* No building data selected or inputManager not properly initialized */
-        if (currentBuildingData == null || inputManager == null || inputManager.currentCell == null)
+        if (inputManager.currentCell == null)
         {
-            Debug.LogWarning($"BuildingData, inputManager or inputManager.currentCell are null, on this {gameObject.name}");
+            Debug.LogWarning($"CurrentCell is null");
             return false;
         }
         /* This case if a building size is 1x1 so only need to do the 1x1 check */
@@ -32,7 +32,7 @@ public class PlacementValidationSystem : MonoBehaviour
         /* Cache the current position of the current cell */
         Vector2Int currentCellInGridPosition = inputManager.GetCellInGridPosition(inputManager.currentCell);
         /* Cache the map grid */
-        var mapGrid = ProceduralMapGenerator.Instance.GetMapGrid();
+        var mapGrid = MapController.Instance.ProceduralTerrain.GetMapGrid();
         switch (placementRotator.GetPlacementRotationDegrees())
         {
             case PlacementRotationDegrees.UpDegree:

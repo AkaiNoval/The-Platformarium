@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
     [SerializeField] Camera mainCam;
 
@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
     /* Last position where a valid raycast hit occurred */
     Vector3 lastPosition;
     public Cell currentCell { get; private set; }
-    public Vector3 GetSelectedMapPosition()
+    public Vector3 GetSelectedCellPosition()
     {
         /* Get the current mouse position in screen coordinates */
         Vector3 mousePos = Input.mousePosition;
@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
     }
     public Vector2Int GetCellInGridPosition(Cell currentCell)
     {
-        ProceduralMapGenerator mapData = ProceduralMapGenerator.Instance;
+        ProceduralTerrainGenerator mapData = MapController.Instance.ProceduralTerrain;
         for (int x = 0; x < mapData.GetMapGrid().GetLength(0); x++)
         {
             for (int y = 0; y < mapData.GetMapGrid().GetLength(1); y++)
@@ -47,8 +47,14 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
-        // If the cell is not found in the grid, return an invalid position
+        /* If the cell is not found in the grid, return an invalid position*/
         return new Vector2Int(-1, -1);
+    }
+    public Vector3 SnapHighLightCellGOBasedOnCurrentCellPos(Vector3 mousePosition)//TODO: Refactor this based on current cell position
+    {
+        /* Snap the cellHighLight gameObject based on mouse position*/
+        Vector3 snappedPosition = currentCell.transform.position;    
+        return snappedPosition += new Vector3(0, 1.01f, 0);
     }
 
 }
