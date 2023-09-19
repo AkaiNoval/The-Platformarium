@@ -331,6 +331,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4958096709789453786}
+  - component: {fileID: 340033436562688639}
   m_Layer: 0
   m_Name: PineTree_1
   m_TagString: Untagged
@@ -354,6 +355,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &340033436562688639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3451810587579363082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f2e5609e0ad534e933533d19cdc71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResourceName: Tree
+  MaterialType: {fileID: 11400000, guid: e9fde258e3460c442ba7bb079ff38791, type: 2}
+  CellPosition: {fileID: 0}
 --- !u!1 &3567219057863315913
 GameObject:
   m_ObjectHideFlags: 0

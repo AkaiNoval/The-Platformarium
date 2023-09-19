@@ -5,13 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
 
-public class BakeNavMesh : MonoBehaviour
+public class NavigationMeshBaker : MonoBehaviour
 {
-    NavMeshSurface navMeshSurface;
+    public NavMeshSurface navMeshSurface { get; private set; }
     private void Awake() => navMeshSurface = GetComponent<NavMeshSurface>();
-    private void OnEnable() => ProceduralMapGenerator.OnGenerationCompleted += BakeNavMeshWhenWorldCreated;
-    private void OnDisable() => ProceduralMapGenerator.OnGenerationCompleted -= BakeNavMeshWhenWorldCreated;
-    void BakeNavMeshWhenWorldCreated()
+    public void BakeNavMeshWhenWorldCreated()
     {
         if (navMeshSurface == null) return;
         navMeshSurface.BuildNavMesh();

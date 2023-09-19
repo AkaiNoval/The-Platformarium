@@ -11,47 +11,50 @@ public enum PlacementMode
 }
 public class PlacementManager : MonoBehaviour
 {
+    PlacementValidationSystem placementValidationSystem;
+    PlacementRotator placementRotator;
+    PlacementPreview placementPreview;
+
     [SerializeField] GameObject originCellHighLight;
-    [SerializeField] InputManager inputManager;
-    [SerializeField] PlacementValidationSystem placementValidationSystem;
-    [SerializeField] PlacementRotator placementRotator;
-    [SerializeField] PlacementPreview placementPreview;
+
     [SerializeField] PlacementMode placementMode;
     [SerializeField] BuildingDataSO currentBuildingData;
+
     [SerializeField] Material invalidMaterialForCellHighLight;
     [SerializeField] Material validMaterialForCellHighLight;
-    [SerializeField] bool allowedToBuild;
-    private Vector3 mousePosition;
+
+    bool allowedToBuild;
     private List<GameObject> childCellHighLights = new List<GameObject>();
     private Cell previousCell;
+    private void Awake()
+    {
+        placementValidationSystem = GetComponentInChildren<PlacementValidationSystem>();
+        placementRotator = GetComponentInChildren<PlacementRotator>();
+        placementPreview = GetComponentInChildren<PlacementPreview>();
+    }
     private void Update()
     {    
-        if(Input.GetMouseButton(0)&& !EventSystem.current.IsPointerOverGameObject()&& childCellHighLights.Count > 0)
-        {        
-            GetMousePosition();
+        if(GameManager.Instance.gameState == GameState.Building
+            && Input.GetMouseButton(0)
+            && !EventSystem.current.IsPointerOverGameObject()
+            && childCellHighLights.Count > 0)
+        {
+            originCellHighLight.SetActive(true);
+            Vector3 mousePos = InputManager.Instance.GetSelectedCellPosition();
             /* If the currentCell is the same as the previous cell no need to check anymore*/
-            if (previousCell == inputManager.currentCell) return;
-            previousCell = inputManager.currentCell;
-            SnapHighLightCellGOBasedOnCurrentCellPos();
+            if (previousCell == InputManager.Instance.currentCell) return;
+            previousCell = InputManager.Instance.currentCell;
+
+            SetBuildingPreviewOnSnappedPosition(mousePos);
             CheckingForFreeOccupiedCell();          
-        }       
+        }
+        else if(GameManager.Instance.gameState != GameState.Building)
+        {
+            originCellHighLight.SetActive(false);
+        }
     }
-    private void GetMousePosition()
-    {
-        /* Cache mouse position and also preview where the mouse actually is on the map */
-        mousePosition = inputManager.GetSelectedMapPosition();
-        //mouseIndicator.transform.position = mousePosition;
-    }
-    private void SnapHighLightCellGOBasedOnCurrentCellPos()//TODO: Refactor this based on current cell position
-    {
-        /* Snap the cellHighLight gameObject based on mouse position*/
-        Vector3 snappedPosition = new Vector3(
-                       Mathf.Round(mousePosition.x),
-                       Mathf.Round(mousePosition.y) + 1.01f,
-                       Mathf.Round(mousePosition.z)
-                   );
-        originCellHighLight.transform.position = snappedPosition;
-    }
+    private void SetBuildingPreviewOnSnappedPosition(Vector3 currentMousePosition) => 
+        originCellHighLight.transform.position = InputManager.Instance.SnapHighLightCellGOBasedOnCurrentCellPos(currentMousePosition);
     public void SetCurrentBuilding(BuildingDataSO selectedBuilding)
     {
         currentBuildingData = selectedBuilding;
@@ -59,7 +62,7 @@ public class PlacementManager : MonoBehaviour
     }
     private void CheckingForFreeOccupiedCell()
     {
-        if (placementValidationSystem.AreCellsValidForBuildMode(currentBuildingData, inputManager, placementRotator, placementPreview.GetHighLightingCells()))
+        if (placementValidationSystem.AreCellsValidForBuildMode(currentBuildingData, InputManager.Instance, placementRotator, placementPreview.GetHighLightingCells()))
         {
             ChangeCellHighLightMaterial(validMaterialForCellHighLight);
             /* Place buildings also set all the cells to Occupied*/
@@ -72,7 +75,6 @@ public class PlacementManager : MonoBehaviour
             allowedToBuild = false;
         }
     }
-
     void ChangeCellHighLightMaterial(Material materialToChange)
     {
         foreach (var cellHighLightChild in childCellHighLights)
@@ -95,7 +97,6 @@ public class PlacementManager : MonoBehaviour
             }
         }
     }
-
     public void RotateBuildingButton()
     {
         /* Ref to placementRotator and change the current rotation of the building */
@@ -131,9 +132,9 @@ public class PlacementManager : MonoBehaviour
     {
         if (!allowedToBuild) return;
         //GameObject highLightingOriginCell = placementPreview.GetHighLightngOriginCell();
-        Instantiate(currentBuildingData.BuildingPrefab, inputManager.currentCell.transform.position + currentBuildingData.BuildingPrefab.transform.position, originCellHighLight.transform.rotation);
+        Instantiate(currentBuildingData.BuildingPrefab, InputManager.Instance.currentCell.transform.position + currentBuildingData.BuildingPrefab.transform.position, originCellHighLight.transform.rotation);
         /* When placed down the building, the free cells need to update their occupation status */
-        ProceduralMapGenerator.Instance.UpdateCellOccupationStatus(true, placementValidationSystem.CellsToUpdate());
+        MapController.Instance.ProceduralTerrain.UpdateCellOccupationStatus(true, placementValidationSystem.CellsToUpdate());
         /*When placed down the building, check 1 more*/
         CheckingForFreeOccupiedCell();
     }
