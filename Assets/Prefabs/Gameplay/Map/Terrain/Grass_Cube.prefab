@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 4079763438570779697}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-6913205002908380323
 MonoBehaviour:
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCell: {fileID: 0}
-  dirtChild: {fileID: 907842094879711261}
+  dirtPart: {fileID: 907842094879711261}
 --- !u!65 &6989990447230403528
 BoxCollider:
   m_ObjectHideFlags: 0

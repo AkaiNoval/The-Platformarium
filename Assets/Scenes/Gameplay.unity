@@ -415,7 +415,7 @@ MonoBehaviour:
     WaterLevel: 0.4
     IsIsland: 1
     ResourcesData:
-    - ResourcesName: Tree
+    - ResourceName: Tree
       ResourcesPrefabs:
       - {fileID: 8887879982614134494, guid: abc5d7765ff0c434ea83a98cb2e1278c, type: 3}
       - {fileID: 3451810587579363082, guid: 54b0928b8e1e9c04da3d7f14fbe8fbab, type: 3}
@@ -424,16 +424,32 @@ MonoBehaviour:
       ResourceNoiseScale: 0.1
       ResourceDensity: 0.5
       shouldSpawn: 1
-    - ResourcesName: Boulder
+      shouldOccupy: 0
+    - ResourceName: Boulder
       ResourcesPrefabs:
       - {fileID: 2637754962207944259, guid: b3bcfc5c48c564c42899bec14fdd3e5e, type: 3}
       - {fileID: 225312669552565161, guid: d27a3ffb66a7dbe43b090526921bce67, type: 3}
       - {fileID: 4307002482967631631, guid: ee304c44a00e16a4fa1ea0b272fa2eba, type: 3}
       - {fileID: 5959040821480048546, guid: 9c4556bbe83486644bfd4c53dd2a6ed1, type: 3}
       - {fileID: 4014965977716097251, guid: 3dc7f09db0ce27745b6941f26aaebf59, type: 3}
-      ResourceNoiseScale: 0.3
+      ResourceNoiseScale: 0.2
       ResourceDensity: 0.3
       shouldSpawn: 1
+      shouldOccupy: 0
+    - ResourceName: Bush
+      ResourcesPrefabs:
+      - {fileID: 1357478109324404836, guid: 6492d364a71c237469b89c0fea9c4e59, type: 3}
+      ResourceNoiseScale: 0.2
+      ResourceDensity: 0.3
+      shouldSpawn: 1
+      shouldOccupy: 0
+    - ResourceName: Grass
+      ResourcesPrefabs:
+      - {fileID: 2811595390276889328, guid: 484e21cadecbc2746ba6436c47aaf170, type: 3}
+      ResourceNoiseScale: 0.5
+      ResourceDensity: 0.7
+      shouldSpawn: 0
+      shouldOccupy: 0
 --- !u!1 &732113597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,7 +1062,7 @@ GameObject:
   - component: {fileID: 1194080673}
   - component: {fileID: 1194080674}
   m_Layer: 0
-  m_Name: InputManager
+  m_Name: ToolManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1545,7 +1561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsPausing>k__BackingField: 0
-  <gameState>k__BackingField: 3
+  <gameState>k__BackingField: 1
 --- !u!1 &1617780809
 GameObject:
   m_ObjectHideFlags: 0

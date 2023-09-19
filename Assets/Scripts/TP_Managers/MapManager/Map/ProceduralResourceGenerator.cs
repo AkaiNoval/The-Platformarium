@@ -7,16 +7,11 @@ using TP.Resource;
 
 public class ProceduralResourceGenerator : MonoBehaviour
 {
-    public void ResourcesGeneration(Cell[,] localGrid,
-                            string resouceName,
-                            List<GameObject> ResourcesPrefabs,
-                            float resourceNoiseScale,
-                            float resourceDensity,
-                            int mapSize)
+    public void ResourcesGeneration(Cell[,] localGrid, ResourceData resourceData, int mapSize)
     {
         /* Responsible to hold all specific resource type*/
         GameObject resourcesParent = new GameObject();
-        resourcesParent.name = resouceName;
+        resourcesParent.name = resourceData.ResourceName;
         resourcesParent.transform.parent = transform;
 
         float[,] noiseMap = new float[mapSize, mapSize];
@@ -27,7 +22,7 @@ public class ProceduralResourceGenerator : MonoBehaviour
         {
             for (int x = 0; x < mapSize; x++)
             {
-                float noiseValue = Mathf.PerlinNoise(x * resourceNoiseScale + randomX, z * resourceNoiseScale + randomZ);
+                float noiseValue = Mathf.PerlinNoise(x * resourceData.ResourceNoiseScale + randomX, z * resourceData.ResourceNoiseScale + randomZ);
                 noiseMap[x, z] = noiseValue;
             }
         }
@@ -41,14 +36,14 @@ public class ProceduralResourceGenerator : MonoBehaviour
                 {
                     /* If there are any impossible case like the Cube of that Cell is deactived? DO NOT SPAWN RESOURCE ON THAT*/
                     if (!cell.GetCurrentCube().gameObject.activeSelf) continue;
-                    float value = Random.Range(0f, resourceDensity);
+                    float value = Random.Range(0f, resourceData.ResourceDensity);
                     if (noiseMap[x, z] < value)
                     {
-                        GameObject resourcePrefab = ResourcesPrefabs[Random.Range(0, ResourcesPrefabs.Count)];
+                        GameObject resourcePrefab = resourceData.ResourcesPrefabs[Random.Range(0, resourceData.ResourcesPrefabs.Count)];
                         GameObject resource = Instantiate(resourcePrefab, transform);
                         resource.transform.position = new Vector3(x, 1, z);
                         resource.transform.rotation = Quaternion.Euler(0, RandomRotationValue(), 0);
-                        resource.name = $"{resouceName}: ({x},{z})";
+                        resource.name = $"{resourceData.ResourceName}: ({x},{z})";
                         resource.transform.parent = resourcesParent.transform;
                         if (resource.TryGetComponent(out Resource r))
                         {
@@ -67,7 +62,7 @@ public class ProceduralResourceGenerator : MonoBehaviour
 [Serializable]
 public class ResourceData
 {
-    public string ResourcesName;
+    public string ResourceName;
     public List<GameObject> ResourcesPrefabs;
     /* It determines the "clumpiness" of tree placement */
     /* Smaller values will lead to more scattered resources, while larger values will create denser clusters of resources.*/
@@ -76,4 +71,5 @@ public class ResourceData
     [Range(0f, 1f)]
     public float ResourceDensity;
     public bool shouldSpawn;
+    public bool shouldOccupy;
 }

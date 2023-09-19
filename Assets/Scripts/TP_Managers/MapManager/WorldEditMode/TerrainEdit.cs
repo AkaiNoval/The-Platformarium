@@ -40,14 +40,13 @@ public class TerrainEdit : MonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.gameState == GameState.WorldEditing && !EventSystem.current.IsPointerOverGameObject())
-        {
-            
+        {        
             mouseHighLight.SetActive(true);
             HighLightBasedOnBrushSize(BrushSize, highLightingCells);
             Debug.Log("Time for world editing");
             if (mouseHighLight == null) return;
             SnapCurrentMousePosistionToCurrentCellPosition(mouseHighLight.transform);
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 TerrainEditing(BrushSize, worldEditType);
             }
@@ -127,10 +126,9 @@ public class TerrainEdit : MonoBehaviour
                         Debug.LogWarning($"{targetCell.name} is already occupied. TerrainEdit operation canceled.");
                         continue;
                     }
-                    // Check if the target cube exists
+                    /* Check if the target cube exists*/
                     if (targetCube != null)
                     {
-                        // Check the edit type
                         if (localWorldEditType == TerrainEditType.Raise)
                         {
                             /* Raise: Activate the cube if it's not already active */
