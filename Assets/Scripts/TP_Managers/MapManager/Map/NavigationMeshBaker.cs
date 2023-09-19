@@ -7,11 +7,9 @@ using Unity.AI.Navigation;
 
 public class NavigationMeshBaker : MonoBehaviour
 {
-    NavMeshSurface navMeshSurface;
+    public NavMeshSurface navMeshSurface { get; private set; }
     private void Awake() => navMeshSurface = GetComponent<NavMeshSurface>();
-    private void OnEnable() => ProceduralTerrainGenerator.OnGenerationCompleted += BakeNavMeshWhenWorldCreated;
-    private void OnDisable() => ProceduralTerrainGenerator.OnGenerationCompleted -= BakeNavMeshWhenWorldCreated;
-    void BakeNavMeshWhenWorldCreated()
+    public void BakeNavMeshWhenWorldCreated()
     {
         if (navMeshSurface == null) return;
         navMeshSurface.BuildNavMesh();

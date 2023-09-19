@@ -7,6 +7,7 @@ public class MapController : Singleton<MapController>
 {
     public ProceduralTerrainGenerator ProceduralTerrain { get; private set; }
     public ProceduralResourceGenerator ProceduralResource { get; private set; }
+    public NavigationMeshBaker NavMeshBaker { get; private set; }
     [field: SerializeField] public MapData MapData { get; private set; }
 
     protected override void Awake()
@@ -14,13 +15,19 @@ public class MapController : Singleton<MapController>
         base.Awake();
         ProceduralTerrain = GetComponentInChildren<ProceduralTerrainGenerator>();
         ProceduralResource = GetComponentInChildren<ProceduralResourceGenerator>();
+        NavMeshBaker = GetComponentInChildren<NavigationMeshBaker>();
     }
     private void Start()
     {
         ProceduralTerrain.ProceduralTerrainGenertaing(MapData.MapSize, MapData.TerrainNoiseScale,MapData.WaterLevel,MapData.IsIsland);
-
-        foreach(var resource in MapData.ResourcesData)
+        ProceduralTerrain.OnGenerationCompleted += StartGeneratingResources;
+        ProceduralTerrain.OnGenerationCompleted += NavMeshBaker.BakeNavMeshWhenWorldCreated;
+    }
+    private void StartGeneratingResources()
+    {
+        foreach (var resource in MapData.ResourcesData)
         {
+            Debug.Log($"RESOURCE: {resource.ResourcesName} is generating...");
             ProceduralResource.ResourcesGeneration(ProceduralTerrain.GetMapGrid(),
                                                    resource.ResourcesName,
                                                    resource.ResourcesPrefabs,
@@ -28,8 +35,14 @@ public class MapController : Singleton<MapController>
                                                    resource.ResourceDensity,
                                                    MapData.MapSize);
         }
-        
     }
+
+    private void OnDisable()
+    {
+        ProceduralTerrain.OnGenerationCompleted -= StartGeneratingResources;
+        ProceduralTerrain.OnGenerationCompleted -= NavMeshBaker.BakeNavMeshWhenWorldCreated;
+    }
+
 }
 
 [Serializable]

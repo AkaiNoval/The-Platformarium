@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class ProceduralTerrainGenerator : MonoBehaviour
 {
-    public static event Action OnGenerationCompleted;
+    public event Action OnGenerationCompleted;
 
     /* Size of the map (assumed to be square)*/
 
@@ -29,15 +29,8 @@ public class ProceduralTerrainGenerator : MonoBehaviour
     [Header("Cell Cube Prefab")]
     [SerializeField] Cell cellPrefab;
     [SerializeField] Cube grassCubePrefab;
-    Cell[,] grid;
-    public void ProceduralTerrainGenertaing(int mapSize, float terrainNoiseScale, float waterLevel, bool isIsland)
-    {
-        grid = new Cell[mapSize, mapSize];
-        FillAirCell(grid, mapSize);
-        FillTerrainCell(grid, mapSize, terrainNoiseScale, waterLevel, isIsland);
-        StartCoroutine(FillTerrainWithGrassCube(grid, mapSize, isIsland));
-    }
-
+    Cell[,] gridMap;
+    
     #region MapGeneration
     private void FillAirCell(Cell[,] localGrid, int mapSize)
     {
@@ -118,7 +111,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 {
                     cell.cellType = CellType.Grass;
                 }
-                grid[x, z] = cell;
+                gridMap[x, z] = cell;
             }
 
         }
@@ -136,7 +129,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 {
                     Vector3 cellPos = new Vector3(x, 0, z);
                     Quaternion randomRotation = Quaternion.Euler(0, RandomRotationValue(), 0);
-                    GameObject grassCube = Instantiate(GetGrassType(grid, x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
+                    GameObject grassCube = Instantiate(GetGrassType(gridMap, x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
                     if (grassCube.TryGetComponent(out Cube cube))
                     {
                         cube.CurrentCell = cell;
@@ -171,7 +164,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 {
                     Vector3 cellPos = new Vector3(x, 0, z);
                     Quaternion randomRotation = Quaternion.Euler(0, RandomRotationValue(), 0);
-                    GameObject grassCube = Instantiate(GetGrassType(grid, x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
+                    GameObject grassCube = Instantiate(GetGrassType(gridMap, x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
                     if (grassCube.TryGetComponent(out Cube cube))
                     {
                         cube.CurrentCell = cell;
@@ -192,7 +185,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         // Check if there is another grass cube on the left side
         if (x > 0)
         {
-            Cell leftCell = grid[x - 1, z];
+            Cell leftCell = gridMap[x - 1, z];
             if (leftCell.cellType != CellType.Grass)
             {
                 return grassCubeType; // Early return if left cell is not grass
@@ -201,7 +194,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         // Check if there is another grass cube on the right side
         if (x < mapSize - 1)
         {
-            Cell rightCell = grid[x + 1, z];
+            Cell rightCell = gridMap[x + 1, z];
             if (rightCell.cellType != CellType.Grass)
             {
                 return grassCubeType; // Early return if right cell is not grass
@@ -210,7 +203,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         // Check if there is another grass cube on the lower side
         if (z > 0)
         {
-            Cell lowerCell = grid[x, z - 1];
+            Cell lowerCell = gridMap[x, z - 1];
             if (lowerCell.cellType != CellType.Grass)
             {
                 return grassCubeType; // Early return if lower cell is not grass
@@ -219,7 +212,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         // Check if there is another grass cube on the upper side
         if (z < mapSize - 1)
         {
-            Cell upperCell = grid[x, z + 1];
+            Cell upperCell = gridMap[x, z + 1];
             if (upperCell.cellType != CellType.Grass)
             {
                 return grassCubeType; // Early return if upper cell is not grass
@@ -235,72 +228,46 @@ public class ProceduralTerrainGenerator : MonoBehaviour
     }
     int RandomRotationValue() => Random.Range(0, 4) * 90; // 0, 90, -90, or 180
     #endregion
-    void ResourcesGeneration(Cell[,] localGrid,
-                             string resouceName,
-                             List<GameObject> ResourcesPrefabs,
-                             float resourceNoiseScale,
-                             float resourceDensity
-        , int mapSize)
-    {
-        /* Responsible to hold all specific resource type*/
-        GameObject resourcesParent = new GameObject();
-        resourcesParent.name = resouceName;
-        resourcesParent.transform.parent = transform;
-
-        float[,] noiseMap = new float[mapSize, mapSize];
-        float offset = 1000000;
-        float randomX = Random.Range(-offset, offset);
-        float randomZ = Random.Range(-offset, offset);
-        for (int z = 0; z < mapSize; z++)
-        {
-            for (int x = 0; x < mapSize; x++)
-            {
-                float noiseValue = Mathf.PerlinNoise(x * resourceNoiseScale + randomX, z * resourceNoiseScale + randomZ);
-                noiseMap[x, z] = noiseValue;
-            }
-        }
-        for (int z = 0; z < mapSize; z++)
-        {
-            for (int x = 0; x < mapSize; x++)
-            {
-                Cell cell = localGrid[x, z];
-
-                if (cell.cellType == CellType.Grass && !cell.IsThisCellOccupied())
-                {
-                    /* If there are any impossible case like the Cube of that Cell is deactived? DO NOT SPAWN RESOURCE ON THAT*/
-                    if (!cell.GetCurrentCube().gameObject.activeSelf) continue;
-                    float value = Random.Range(0f, resourceDensity);
-                    if (noiseMap[x, z] < value)
-                    {
-                        GameObject resourcePrefab = ResourcesPrefabs[Random.Range(0, ResourcesPrefabs.Count)];
-                        GameObject resource = Instantiate(resourcePrefab, transform);
-                        resource.transform.position = new Vector3(x, 1, z);
-                        resource.transform.rotation = Quaternion.Euler(0, RandomRotationValue(), 0);
-                        resource.name = $"{resouceName}: ({x},{z})";
-                        resource.transform.parent = resourcesParent.transform;
-                        if (resource.TryGetComponent(out Resource r))
-                        {
-                            r.CellPosition = cell;
-                        }
-                        /* Succesfully created a resouce node, set this cell to occupied */
-                        cell.UpdateOccupationStatus(true);
-                    }
-                }
-            }
-        }
-    }
 
     #region Helper Methods
-
-    public Cell[,] GetMapGrid() => grid;
+    public void ProceduralTerrainGenertaing(int mapSize, float terrainNoiseScale, float waterLevel, bool isIsland)
+    {
+        gridMap = new Cell[mapSize, mapSize];
+        FillAirCell(gridMap, mapSize);
+        FillTerrainCell(gridMap, mapSize, terrainNoiseScale, waterLevel, isIsland);
+        StartCoroutine(FillTerrainWithGrassCube(gridMap, mapSize, isIsland));
+    }
+    public Cell[,] GetMapGrid() => gridMap;
     public void UpdateCellOccupationStatus(bool occupationStatus, List<Cell> cellsToUpdate)
     {
         foreach (var cell in cellsToUpdate)
         {
             cell.UpdateOccupationStatus(occupationStatus);
         }
-    } 
+    }
     #endregion
+    public void ChangingTerrainTileBasedOnAdjacentCells(int mapSize)
+    {
+        for (int x = 0; x < mapSize; x++)
+        { 
+            for (int z = 0; z < mapSize; z++)
+            {
+                /* Get the cube at the current grid position */
+                Cube cubeToChange = gridMap[x, z].GetCurrentCube();
+
+                if (cubeToChange != null && cubeToChange.isActiveAndEnabled && cubeToChange.ShouldShowDirt(x, z))
+                {
+                    /* Activate dirt platform for the cube */
+                    cubeToChange.SetActiveDirtPlatform(true);
+                }
+                else
+                {
+                    /* Deactivate dirt platform for the cube */
+                    cubeToChange?.SetActiveDirtPlatform(false);
+                }
+            }
+        }
+    }
 
     //private void OnDrawGizmos()
     //{

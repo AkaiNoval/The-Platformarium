@@ -35,8 +35,7 @@ public class TerrainEdit : MonoBehaviour
     int maxBrushSize = 5;
     private void Start()
     {
-        InstantiateHighlightsBasedOnBrushSize(maxBrushSize, mouseHighLight, highLightingCellPrefab);
-        
+        InstantiateHighlightsBasedOnBrushSize(maxBrushSize, mouseHighLight, highLightingCellPrefab);       
     }
     private void Update()
     {
@@ -46,6 +45,7 @@ public class TerrainEdit : MonoBehaviour
             mouseHighLight.SetActive(true);
             HighLightBasedOnBrushSize(BrushSize, highLightingCells);
             Debug.Log("Time for world editing");
+            if (mouseHighLight == null) return;
             SnapCurrentMousePosistionToCurrentCellPosition(mouseHighLight.transform);
             if (Input.GetMouseButtonDown(0))
             {
