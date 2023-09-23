@@ -15,8 +15,7 @@ public class PlacementValidationSystem : MonoBehaviour
                                           List<GameObject> highLightingCells)
     {
         cellsToUpdate = new List<Cell>();
-        /* No building data selected or inputManager not properly initialized */
-        if (inputManager.currentCell == null)
+        if (inputManager.CurrentCell == null)
         {
             Debug.LogWarning($"CurrentCell is null");
             return false;
@@ -30,7 +29,7 @@ public class PlacementValidationSystem : MonoBehaviour
         int buildingWidth = currentBuildingData.BuildingSize.x;
         int buildingHeight = currentBuildingData.BuildingSize.y;
         /* Cache the current position of the current cell */
-        Vector2Int currentCellInGridPosition = inputManager.GetCellInGridPosition(inputManager.currentCell);
+        Vector2Int currentCellInGridPosition = inputManager.GetCellInGridPosition(inputManager.CurrentCell);
         /* Cache the map grid */
         var mapGrid = MapController.Instance.ProceduralTerrain.GetMapGrid();
         switch (placementRotator.GetPlacementRotationDegrees())
@@ -54,12 +53,12 @@ public class PlacementValidationSystem : MonoBehaviour
     bool CheckingForValidationOf1x1BuildingSize(InputManager inputManager)
     {
         /* Check if the selected cell is occupied or not grass */
-        if (inputManager.currentCell.IsThisCellOccupied() || inputManager.currentCell.cellType != CellType.Grass)
+        if (inputManager.CurrentCell.IsThisCellOccupied() || inputManager.CurrentCell.cellType != CellType.Grass)
         {
             Debug.Log("This 1x1 cell is invalid for building");
             return false;
         }
-        cellsToUpdate.Add(inputManager.currentCell);
+        cellsToUpdate.Add(inputManager.CurrentCell);
         return true;
     }
     bool CheckingForValidationAtZeroDegrees(int buildingWidth, int buildingHeight, Vector2Int currentCellInGridPosition, Cell[,] mapGrid)

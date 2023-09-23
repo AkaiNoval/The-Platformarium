@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &347641318302574221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4468144498038986113}
+  - component: {fileID: 5335795709751570620}
+  m_Layer: 0
+  m_Name: GameAssets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4468144498038986113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347641318302574221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5335795709751570620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347641318302574221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40eff4239965e174a9b819f8f9a137d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapElementPrefabsType:
+  - prefabCatoragy: 0
+    prefabName: Cell
+    prefabObject: {fileID: 1877562661418595937, guid: 13b447a6db4e9b54fa70da50d2c22106,
+      type: 3}
+  - prefabCatoragy: 1
+    prefabName: GrassCube
+    prefabObject: {fileID: 5549885501358956628, guid: e67f4cf689a296e4cbefe5fbd2ea3590,
+      type: 3}
+  - prefabCatoragy: 2
+    prefabName: HighLightCell
+    prefabObject: {fileID: 358021235954699567, guid: 4e097ec6731302348ac0aa10b10dc489,
+      type: 3}
+  CreationPrefabsType: []
+  BuildingPrefabsType:
+  - prefabCatoragy: 5
+    prefabName: SmallTent
+    prefabObject: {fileID: 2606831711334759815, guid: 8fe65c16c8c18014d840021836e1c522,
+      type: 3}
+  - prefabCatoragy: 6
+    prefabName: BigTent
+    prefabObject: {fileID: 6746654151538710371, guid: 458592e1188f8cf4997e0a1c8ff39656,
+      type: 3}
+  UIElementPrefabsType:
+  - prefabCatoragy: 10
+    prefabName: UIItemElement
+    prefabObject: {fileID: 5164225091913042816, guid: 1152bf6707260194391167421361d543,
+      type: 3}
+  BuildingSOs: []
+  PrototypeSOs: []
+  AnimalsSOs: []

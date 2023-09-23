@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlacementPreview : MonoBehaviour
 {
-    [SerializeField] GameObject highLightingCellPrefab, highLightingOriginCell;
+    [SerializeField] GameObject highLightingOriginCell;
     private List<GameObject> highLightingCells;
     public List<GameObject> InstantiateHighlightsBasedOnBuildingSize(BuildingDataSO currentBuildingData)
     {
@@ -27,6 +27,7 @@ public class PlacementPreview : MonoBehaviour
             {
 
                 Vector3 position = new Vector3(x, 0, y) + highLightingOriginCell.transform.position;
+                var highLightingCellPrefab = GameAssets.Instance.LoadPrefab(AssetsEnum.PrefabType.HighLightCell, GameAssets.Instance.MapElementPrefabsType);
                 GameObject newCell = Instantiate(highLightingCellPrefab, position, Quaternion.identity);
                 newCell.transform.parent = highLightingOriginCell.transform;
                 highLightingCells.Add(newCell);

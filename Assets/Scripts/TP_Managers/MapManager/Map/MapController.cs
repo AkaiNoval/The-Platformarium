@@ -29,12 +29,6 @@ public class MapController : Singleton<MapController>
         {
             if (!resource.shouldSpawn) continue;
             Debug.Log($"RESOURCE: {resource.ResourceName} is generating...");
-            //ProceduralResource.ResourcesGeneration(ProceduralTerrain.GetMapGrid(),
-            //                                       resource.ResourceName,
-            //                                       resource.ResourcesPrefabs,
-            //                                       resource.ResourceNoiseScale,
-            //                                       resource.ResourceDensity,
-            //                                       MapData.MapSize);
             ProceduralResource.ResourcesGeneration(ProceduralTerrain.GetMapGrid(), resource, MapData.MapSize);
         }
     }
