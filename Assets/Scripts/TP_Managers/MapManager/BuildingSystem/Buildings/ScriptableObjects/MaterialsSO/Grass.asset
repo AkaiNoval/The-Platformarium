@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   materialName: Grass
+  sprite: {fileID: 21300000, guid: 6e47f333760364a45b7f88cc00623204, type: 3}

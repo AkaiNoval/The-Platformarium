@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8503e45baaf2a5f458a6622fa2cbb77f, type: 3}
+  m_Name: LiveStockBarn
+  m_EditorClassIdentifier: 
+  BuildingName: LiveStockBarn
+  BuildingSize: {x: 11, y: 10}
+  BuildingMaterialsCost:
+  - Material: {fileID: 11400000, guid: e9fde258e3460c442ba7bb079ff38791, type: 2}
+    Amount: 100
+  - Material: {fileID: 11400000, guid: ebb721b43ef4a0c4eaf678e26235419c, type: 2}
+    Amount: 50
+  BuildingHittingTime: 110
+  BuildingPrefab: {fileID: 8844618697209846905, guid: ff2a7b780a445f6438710fd5ddd72886,
+    type: 3}

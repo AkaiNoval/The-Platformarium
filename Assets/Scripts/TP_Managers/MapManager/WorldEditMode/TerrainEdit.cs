@@ -100,7 +100,7 @@ public class TerrainEdit : MonoBehaviour
     private void TerrainEditing(int localBrushSize, TerrainEditType localWorldEditType)
     {
         /* Get the current cell's position*/
-        Cell currentCell = InputManager.Instance.currentCell;
+        Cell currentCell = InputManager.Instance.CurrentCell;
         /* Get the current cell's position in grid coordinates */
         Vector2Int currentCellGridPos = InputManager.Instance.GetCellInGridPosition(currentCell);
         Cell[,] grid = MapController.Instance.ProceduralTerrain.GetMapGrid();

@@ -11,7 +11,7 @@ public class InputManager : Singleton<InputManager>
 
     /* Last position where a valid raycast hit occurred */
     Vector3 lastPosition;
-    public Cell currentCell { get; private set; }
+    [field: SerializeField] public Cell CurrentCell { get; private set; }
     public Vector3 GetSelectedCellPosition()
     {
         /* Get the current mouse position in screen coordinates */
@@ -29,7 +29,7 @@ public class InputManager : Singleton<InputManager>
             lastPosition = hit.point;
             if (hit.collider.gameObject.TryGetComponent(out Cell rayHitCell))
             {
-                currentCell = rayHitCell;
+                CurrentCell = rayHitCell;
             }
         }
         return lastPosition;
@@ -53,7 +53,7 @@ public class InputManager : Singleton<InputManager>
     public Vector3 SnapHighLightCellGOBasedOnCurrentCellPos(Vector3 mousePosition)//TODO: Refactor this based on current cell position
     {
         /* Snap the cellHighLight gameObject based on mouse position*/
-        Vector3 snappedPosition = currentCell.transform.position;    
+        Vector3 snappedPosition = CurrentCell.transform.position;    
         return snappedPosition += new Vector3(0, 1.01f, 0);
     }
 

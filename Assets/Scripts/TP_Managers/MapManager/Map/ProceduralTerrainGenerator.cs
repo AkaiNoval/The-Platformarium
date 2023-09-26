@@ -10,31 +10,12 @@ public class ProceduralTerrainGenerator : MonoBehaviour
 {
     public event Action OnGenerationCompleted;
 
-    /* Size of the map (assumed to be square)*/
-
-    //[SerializeField] int mapSize;
-
-    /* Scale factor for generating Perlin noise*/
-    /* A smaller value create larger, smoother features in the terrain, 
-     * while a larger value will create smaller, more detailed features.*/
-    //[SerializeField] float terrainNoiseScale = .1f;
-
-    /* Threshold value for determining water cells */
-    //[SerializeField] float waterLevel = .4f;
-
-    /* Should be an island or a continuous terrain 
-     * that covers the entire map without any significant gaps or separations.*/
-    //[SerializeField] bool isIsland;
-
-    [Header("Cell Cube Prefab")]
-    [SerializeField] Cell cellPrefab;
-    [SerializeField] Cube grassCubePrefab;
     Cell[,] gridMap;
     
     #region MapGeneration
     private void FillAirCell(Cell[,] localGrid, int mapSize)
     {
-
+        GameObject cellPrefab = GameAssets.Instance.LoadPrefab(AssetsEnum.PrefabType.Cell, GameAssets.Instance.MapElementPrefabsType);
         /* Responsible to hold all cells*/
         GameObject Cells = new GameObject();
         Cells.name = "Cells";
@@ -43,12 +24,17 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         {
             for (int z = 0; z < mapSize; z++)
             {
+
                 var newPos = new Vector3(x, 0, z);
-                var cell = Instantiate(cellPrefab, newPos, Quaternion.identity);
-                cell.name = $"Cell x: {x} z: {z}";
-                cell.transform.SetParent(Cells.transform, false);
-                cell.cellType = CellType.Air;
-                localGrid[x, z] = cell;
+                var spawnedCell = Instantiate(cellPrefab, newPos, Quaternion.identity);
+                if(spawnedCell.TryGetComponent(out Cell cell))
+                {
+                    cell.name = $"Cell x: {x} z: {z}";
+                    cell.transform.SetParent(Cells.transform, false);
+                    cell.cellType = CellType.Air;
+                    localGrid[x, z] = cell;
+                }
+
             }
         }
 
@@ -129,7 +115,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 {
                     Vector3 cellPos = new Vector3(x, 0, z);
                     Quaternion randomRotation = Quaternion.Euler(0, RandomRotationValue(), 0);
-                    GameObject grassCube = Instantiate(GetGrassType(gridMap, x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
+                    GameObject grassCube = Instantiate(GetGrassType(x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
                     if (grassCube.TryGetComponent(out Cube cube))
                     {
                         cube.CurrentCell = cell;
@@ -140,16 +126,6 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 }
             }
         }
-        //foreach (var resouceData in resourcePrefabsData)
-        //{
-        //    if (!resouceData.shouldSpawn) continue;
-        //    Debug.Log("Generating..." + resouceData.ResourcesName);
-        //    ResourcesGeneration(grid,
-        //        resouceData.ResourcesName,
-        //        resouceData.ResourcesPrefabs,
-        //        resouceData.ResourceNoiseScale,
-        //        resouceData.ResourceDensity);
-        //}
         FillInactiveGrassCube(localGrid, Terrain, mapSize, isIsland);
         OnGenerationCompleted?.Invoke();
     }
@@ -164,7 +140,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 {
                     Vector3 cellPos = new Vector3(x, 0, z);
                     Quaternion randomRotation = Quaternion.Euler(0, RandomRotationValue(), 0);
-                    GameObject grassCube = Instantiate(GetGrassType(gridMap, x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
+                    GameObject grassCube = Instantiate(GetGrassType(x, z, mapSize, isIsland).gameObject, cellPos, randomRotation);
                     if (grassCube.TryGetComponent(out Cube cube))
                     {
                         cube.CurrentCell = cell;
@@ -177,10 +153,10 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         }
     }
 
-    Cube GetGrassType(Cell[,] localGrid, int x, int z, int mapSize, bool isIsland)
+    Cube GetGrassType(int x, int z, int mapSize, bool isIsland)
     {
-        Cell cell = localGrid[x, z];
-        Cube grassCubeType = grassCubePrefab;
+        GameObject grassCubePrefab = GameAssets.Instance.LoadPrefab(AssetsEnum.PrefabType.GrassCube, GameAssets.Instance.MapElementPrefabsType);
+        Cube grassCubeType = grassCubePrefab.GetComponent<Cube>();
         grassCubeType.SetActiveDirtPlatform(true);
         // Check if there is another grass cube on the left side
         if (x > 0)
@@ -246,6 +222,8 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         }
     }
     #endregion
+
+    //TODO Add this method after completing editing map
     public void ChangingTerrainTileBasedOnAdjacentCells(int mapSize)
     {
         for (int x = 0; x < mapSize; x++)

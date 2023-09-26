@@ -33,17 +33,19 @@ public class PlacementManager : MonoBehaviour
         placementPreview = GetComponentInChildren<PlacementPreview>();
     }
     private void Update()
-    {    
+    {
+        Debug.Log(childCellHighLights.Count);
         if(GameManager.Instance.gameState == GameState.Building
             && Input.GetMouseButton(0)
             && !EventSystem.current.IsPointerOverGameObject()
             && childCellHighLights.Count > 0)
         {
+            Debug.Log("Getting Input");
             originCellHighLight.SetActive(true);
             Vector3 mousePos = InputManager.Instance.GetSelectedCellPosition();
             /* If the currentCell is the same as the previous cell no need to check anymore*/
-            if (previousCell == InputManager.Instance.currentCell) return;
-            previousCell = InputManager.Instance.currentCell;
+            if (previousCell == InputManager.Instance.CurrentCell) return;
+            previousCell = InputManager.Instance.CurrentCell;
 
             SetBuildingPreviewOnSnappedPosition(mousePos);
             CheckingForFreeOccupiedCell();          
@@ -88,7 +90,7 @@ public class PlacementManager : MonoBehaviour
             }
         }
         if (!placementPreview.TransparentBuilding) return;
-        List<Renderer> renderers = placementPreview.TransparentBuilding.GetAllRendersInTheBuilding();
+        List<Renderer> renderers = placementPreview.TransparentBuilding.GetAllRenderersInTheBuilding();
         foreach (var renderer in renderers)
         {
             if (renderer != null)
@@ -132,7 +134,7 @@ public class PlacementManager : MonoBehaviour
     {
         if (!allowedToBuild) return;
         //GameObject highLightingOriginCell = placementPreview.GetHighLightngOriginCell();
-        Instantiate(currentBuildingData.BuildingPrefab, InputManager.Instance.currentCell.transform.position + currentBuildingData.BuildingPrefab.transform.position, originCellHighLight.transform.rotation);
+        Instantiate(currentBuildingData.BuildingPrefab, InputManager.Instance.CurrentCell.transform.position + currentBuildingData.BuildingPrefab.transform.position, originCellHighLight.transform.rotation);
         /* When placed down the building, the free cells need to update their occupation status */
         MapController.Instance.ProceduralTerrain.UpdateCellOccupationStatus(true, placementValidationSystem.CellsToUpdate());
         /*When placed down the building, check 1 more*/
