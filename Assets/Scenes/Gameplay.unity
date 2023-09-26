@@ -4062,7 +4062,7 @@ MonoBehaviour:
     MapSize: 70
     TerrainNoiseScale: 0.1
     WaterLevel: 0.4
-    IsIsland: 0
+    IsIsland: 1
     ResourcesData:
     - ResourceName: Tree
       ResourcesPrefabs:
