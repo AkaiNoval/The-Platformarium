@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContentTabHolder : MonoBehaviour
+public class BuildingContentTabHolder : MonoBehaviour
 {
     /* Where for the tab generator to set the parent for the generated UIelement*/
     [field: SerializeField] public Transform itemUIInfoParent { get; private set; }
