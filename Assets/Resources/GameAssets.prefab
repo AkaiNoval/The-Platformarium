@@ -72,6 +72,21 @@ MonoBehaviour:
     prefabName: UIItemElement
     prefabObject: {fileID: 5164225091913042816, guid: 1152bf6707260194391167421361d543,
       type: 3}
-  BuildingSOs: []
+  BuildingSOs:
+  - scriptableObjectType: 1
+    scriptableObjectName: 
+    scriptableObject: {fileID: 11400000, guid: f79b5ac097ca9944385e9f12748b52f2, type: 2}
+  - scriptableObjectType: 2
+    scriptableObjectName: 
+    scriptableObject: {fileID: 11400000, guid: 1df26026847429d4cae0e08c17fb67e4, type: 2}
+  - scriptableObjectType: 3
+    scriptableObjectName: 
+    scriptableObject: {fileID: 11400000, guid: d08461e3e113d82459c8c80e17dd2c79, type: 2}
+  - scriptableObjectType: 4
+    scriptableObjectName: 
+    scriptableObject: {fileID: 11400000, guid: 1a397b43a3abe594d9976f9bb326605e, type: 2}
+  - scriptableObjectType: 5
+    scriptableObjectName: 
+    scriptableObject: {fileID: 11400000, guid: b40531df9c9fa7a45af6ecf755bc28ba, type: 2}
   PrototypeSOs: []
   AnimalsSOs: []

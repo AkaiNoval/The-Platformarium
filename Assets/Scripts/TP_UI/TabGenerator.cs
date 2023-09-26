@@ -10,4 +10,11 @@ public class TabGenerator : MonoBehaviour
     {
         contentHolderTabs = GetComponentsInChildren<ContentTabHolder>(true).ToList();
     }
+    private void Start()
+    {
+        foreach (var item in contentHolderTabs)
+        {
+            item.GenerateItemElement();
+        }
+    }
 }

@@ -8,12 +8,11 @@ public class BuildingDataSO : ScriptableObject
     public string BuildingName;
     public Vector2Int BuildingSize;
     public List<MaterialsForBuilding> BuildingMaterialsCost;
+    public int creationPoint;
     /* How many hits to contrust this building, hitting, ya know, thats why it is in int */
     public int BuildingHittingTime;
     public Building BuildingPrefab;
-
 }
-
 [System.Serializable]
 public class MaterialsForBuilding
 {

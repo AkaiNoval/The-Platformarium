@@ -19,6 +19,6 @@ MonoBehaviour:
     Amount: 50
   - Material: {fileID: 11400000, guid: e9fde258e3460c442ba7bb079ff38791, type: 2}
     Amount: 10
-  BuildingHittingTime: 50
+  BuildingHittingTime: 42
   BuildingPrefab: {fileID: 7301360777051581276, guid: 458592e1188f8cf4997e0a1c8ff39656,
     type: 3}

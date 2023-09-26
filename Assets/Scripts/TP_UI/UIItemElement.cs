@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class UIItemElement : MonoBehaviour
 {
-    [field: SerializeField] Image itemImage { get; set; }
-    [field: SerializeField] GameObject rightMaterialUIInfo { get; set; }
-    [field: SerializeField] GameObject leftMaterialUIInfo { get; set; }
-    [field: SerializeField] TMP_Text itemName { get; set; }
+    [field: SerializeField] public Image itemImage { get; set; }
+    [field: SerializeField] public GameObject rightMaterialUIInfo { get; set; }
+    [field: SerializeField] public GameObject leftMaterialUIInfo { get; set; }
+    [field: SerializeField] public TMP_Text itemName { get; set; }
 }

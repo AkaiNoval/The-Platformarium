@@ -7,5 +7,5 @@ public abstract class Building : MonoBehaviour
 {
     [SerializeField] BuildingDataSO buildingDataSO;
     [SerializeField] List<Renderer> renderers;
-    public List<Renderer> GetAllRendersInTheBuilding() => renderers;
+    public List<Renderer> GetAllRenderersInTheBuilding() => renderers;
 }

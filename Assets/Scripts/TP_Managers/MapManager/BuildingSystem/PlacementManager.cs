@@ -90,7 +90,7 @@ public class PlacementManager : MonoBehaviour
             }
         }
         if (!placementPreview.TransparentBuilding) return;
-        List<Renderer> renderers = placementPreview.TransparentBuilding.GetAllRendersInTheBuilding();
+        List<Renderer> renderers = placementPreview.TransparentBuilding.GetAllRenderersInTheBuilding();
         foreach (var renderer in renderers)
         {
             if (renderer != null)
