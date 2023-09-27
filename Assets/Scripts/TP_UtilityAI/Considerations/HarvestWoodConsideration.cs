@@ -6,7 +6,7 @@ using UnityEngine;
 public class HarvestWoodConsideration : UConsideration
 {
     [SerializeField] private AnimationCurve responseCurve;
-    public override float ScoreConsideration(ColonistController colonist)
+    public override float ScoreConsideration(PrototypeController colonist)
     {
 
         return GetScoreBasedOnTheStoragesCapacity();

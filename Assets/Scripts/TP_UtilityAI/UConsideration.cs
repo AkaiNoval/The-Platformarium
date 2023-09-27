@@ -19,5 +19,5 @@ public abstract class UConsideration : ScriptableObject
 
     /* For getting score based on conditions */
     /* Every considerations are scored differently */
-    public abstract float ScoreConsideration(ColonistController colonist);
+    public abstract float ScoreConsideration(PrototypeController colonist);
 }

@@ -15,9 +15,9 @@ public abstract class UAction : ScriptableObject
     /* Score should alway be clamped at 0-1*/
     public float Score { get => score; set => score = Mathf.Clamp01(value); }
 
-    public Transform RequiredDestination { get; protected set; }
+    //public Transform RequiredDestination { get; protected set; }
     public virtual void Awake() => score = 0;
 
-    public abstract void Execute<T>(T colonist) where T : ColonistController;
-    public abstract void SetRequiredDestination<T>(T colonist) where T : ColonistController;
+    public abstract void Execute<T>(T colonist) where T : PrototypeController;
+    public abstract void SetRequiredDestination<T>(T colonist) where T : PrototypeController;
 }

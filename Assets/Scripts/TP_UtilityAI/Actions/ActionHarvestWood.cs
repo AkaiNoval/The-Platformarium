@@ -21,8 +21,6 @@ public class ActionHarvestWood : UAction
         float shortestDistance = Mathf.Infinity;
 
         /* Iterate through all trees in the world*/
-
-
         foreach (var tree in WorldContext.Instance.AllTreesOnTheMap)
         {
             /* Calculate the distance between the colonist and the current tree */
@@ -37,13 +35,13 @@ public class ActionHarvestWood : UAction
         }
 
 
-        Debug.Log(nearestTree.transform.position);
+        if (nearestTree == null) return;
         /* Set the required destination for the action to the nearest tree */
-        RequiredDestination = nearestTree;
+        colonist.MoveController.RequiredDestination = nearestTree;
 
         /* Set the NavMesh agent's destination to the nearest tree */
 
-        /////////======>colonist.MoveController.destination = nearestTree;
+        colonist.MoveController.destination = nearestTree;
     }
 
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 public class CreationSystem : MonoBehaviour
 {
@@ -31,6 +32,10 @@ public class CreationSystem : MonoBehaviour
 
     private void InstantiatePrototypeBasedOnCurrentSituation(SOPrototype prototype)
     {
-        var spawnedPrototype = Instantiate(currentSOPrototype.BuildingPrefab, mouseHighLight.transform.position, Quaternion.identity);
+        Vector2Int currentCellInGridPosition = InputManager.Instance.GetCellInGridPosition(InputManager.Instance.CurrentCell);
+        if (currentCellInGridPosition == null) return;
+        var mapGrid = MapController.Instance.ProceduralTerrain.GetMapGrid();
+        if (mapGrid[currentCellInGridPosition.x, currentCellInGridPosition.y].IsThisCellOccupied()) return;
+        var spawnedPrototype = Instantiate(currentSOPrototype.BuildingPrefab, mouseHighLight.transform.position + new Vector3(0,0.5f,0), Quaternion.identity);
     }
 }

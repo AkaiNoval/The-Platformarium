@@ -7042,7 +7042,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 8
-  m_UseGeometry: 1
+  m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 1
   m_IgnoreNavMeshAgent: 1
@@ -8098,6 +8098,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2147623978487956632, guid: 45a354398985da54fa66ad0d546ce1c6,
+        type: 3}
+      propertyPath: currentCapacity
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5065256730241491374, guid: 45a354398985da54fa66ad0d546ce1c6,
         type: 3}

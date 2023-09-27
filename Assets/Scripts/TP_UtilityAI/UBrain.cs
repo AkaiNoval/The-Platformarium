@@ -11,10 +11,10 @@ public class UBrain : MonoBehaviour
     [SerializeField] private UAction[] actionsAvailable;
     public bool FinishedDeciding { get; set; }
     public bool FinishedExecutingBestAction { get; set; }
-    private ColonistController colonist;
+    private PrototypeController colonist;
     void Awake()
     {
-        colonist = GetComponent<ColonistController>();
+        colonist = GetComponent<PrototypeController>();
         FinishedDeciding = false;
         FinishedExecutingBestAction = false;
     }
