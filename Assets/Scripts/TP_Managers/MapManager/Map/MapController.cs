@@ -21,7 +21,7 @@ public class MapController : Singleton<MapController>
     {
         ProceduralTerrain.ProceduralTerrainGenertaing(MapData.MapSize, MapData.TerrainNoiseScale,MapData.WaterLevel,MapData.IsIsland);
         ProceduralTerrain.OnGenerationCompleted += StartGeneratingResources;
-        ProceduralTerrain.OnGenerationCompleted += NavMeshBaker.BakeNavMeshWhenWorldCreated;
+        ProceduralTerrain.OnGenerationCompleted += NavMeshBaker.BakeNavMeshWhenWorldChanged;
     }
     private void StartGeneratingResources()
     {
@@ -36,7 +36,7 @@ public class MapController : Singleton<MapController>
     private void OnDisable()
     {
         ProceduralTerrain.OnGenerationCompleted -= StartGeneratingResources;
-        ProceduralTerrain.OnGenerationCompleted -= NavMeshBaker.BakeNavMeshWhenWorldCreated;
+        ProceduralTerrain.OnGenerationCompleted -= NavMeshBaker.BakeNavMeshWhenWorldChanged;
     }
 
 }

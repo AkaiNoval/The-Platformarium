@@ -893,6 +893,11 @@ MonoBehaviour:
   - {fileID: 6889445734786438025}
   - {fileID: 8143487965028587355}
   - {fileID: 9052030558581131404}
+  maxCapacity: 10
+  currentCapacity: 0
+  lowCap: {fileID: 7158365703130900250}
+  MedCap: {fileID: 2806107708093284112}
+  HighCap: {fileID: 3855985281236149934}
 --- !u!1 &2299731449487289950
 GameObject:
   m_ObjectHideFlags: 0

@@ -2485,6 +2485,11 @@ MonoBehaviour:
   - {fileID: 4325041079183820468}
   - {fileID: 3604651036858850011}
   - {fileID: 3638303156535045592}
+  maxCapacity: 10
+  currentCapacity: 0
+  lowCap: {fileID: 4491654659264919656}
+  MedCap: {fileID: 7804174325203410222}
+  HighCap: {fileID: 1819616027952076174}
 --- !u!1 &5471143440530807561
 GameObject:
   m_ObjectHideFlags: 0

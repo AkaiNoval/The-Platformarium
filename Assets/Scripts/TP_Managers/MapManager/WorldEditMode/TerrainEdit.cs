@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public static class CubeManager
 {
@@ -17,12 +19,14 @@ public enum TerrainEditType
 }
 public class TerrainEdit : MonoBehaviour
 {
+    public Slider brushSizeSlider;
     [Range(1,5)]
     [SerializeField] int brushSize;
     [SerializeField] GameObject mouseHighLight;
     [SerializeField] GameObject highLightingCellPrefab;
     [SerializeField] TerrainEditType worldEditType;
     GameObject[,] highLightingCells;
+    [SerializeField] NavigationMeshBaker navigationMeshBaker;
     public int BrushSize 
     { 
         get => brushSize;
@@ -35,7 +39,8 @@ public class TerrainEdit : MonoBehaviour
     int maxBrushSize = 5;
     private void Start()
     {
-        InstantiateHighlightsBasedOnBrushSize(maxBrushSize, mouseHighLight, highLightingCellPrefab);       
+        InstantiateHighlightsBasedOnBrushSize(maxBrushSize, mouseHighLight, highLightingCellPrefab);
+        brushSizeSlider.onValueChanged.AddListener(ChangeBrushSize);
     }
     private void Update()
     {
@@ -49,6 +54,12 @@ public class TerrainEdit : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 TerrainEditing(BrushSize, worldEditType);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                MapController.Instance.ProceduralTerrain.ChangingTerrainTileBasedOnAdjacentCells();
+                navigationMeshBaker.BakeNavMeshWhenWorldChanged();
+                Debug.Log("Optimize map");
             }
         }
         else if (GameManager.Instance.gameState != GameState.WorldEditing)
@@ -164,6 +175,21 @@ public class TerrainEdit : MonoBehaviour
         if (!anyCubesChanged)
         {
             Debug.LogWarning("No cubes were changed in the brush area.");
+        }
+    }
+    private void ChangeBrushSize(float newSize)
+    {
+        brushSize = (int)newSize;
+    }
+    public void ChooseWorldEditTypeButton(string EditType)
+    {
+        if (Enum.TryParse(EditType, out TerrainEditType newState))
+        {
+            worldEditType = newState;
+        }
+        else
+        {
+            Debug.LogWarning("Invalid game state string: " + EditType);
         }
     }
 }

@@ -429,7 +429,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6370073172045799581}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3850922418926979607}
+        m_TargetAssemblyTypeName: UIItemElement, Assembly-CSharp
+        m_MethodName: ChangeGameStateButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Building
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3850922418926979607}
+        m_TargetAssemblyTypeName: UIItemElement, Assembly-CSharp
+        m_MethodName: InitBuildingHighLightButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6032150381487128485
 GameObject:
   m_ObjectHideFlags: 0

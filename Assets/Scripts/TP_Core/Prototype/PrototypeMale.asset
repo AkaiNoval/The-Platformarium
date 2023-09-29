@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49c247bd1b873e4ea27699eff14f939, type: 3}
+  m_Name: PrototypeMale
+  m_EditorClassIdentifier: 
+  prototypeName: 
+  creationPoint: 100
+  BuildingPrefab: {fileID: 6169673720275758962, guid: f1a23b7f971dda34ca000e3d058f4cb2,
+    type: 3}
+  MaxHealth: 100
+  MaxHunger: 100
+  MaxEnergy: 100

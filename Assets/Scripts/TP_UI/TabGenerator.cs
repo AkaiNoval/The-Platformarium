@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class TabGenerator : MonoBehaviour
 {
-    [field: SerializeField] List<ContentTabHolder> contentHolderTabs;
+    [field: SerializeField] List<BuildingContentTabHolder> contentHolderTabs;
     private void Awake()
     {
-        contentHolderTabs = GetComponentsInChildren<ContentTabHolder>(true).ToList();
+        contentHolderTabs = GetComponentsInChildren<BuildingContentTabHolder>(true).ToList();
     }
     private void Start()
     {

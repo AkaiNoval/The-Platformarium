@@ -224,8 +224,9 @@ public class ProceduralTerrainGenerator : MonoBehaviour
     #endregion
 
     //TODO Add this method after completing editing map
-    public void ChangingTerrainTileBasedOnAdjacentCells(int mapSize)
+    public void ChangingTerrainTileBasedOnAdjacentCells()
     {
+        int mapSize = MapController.Instance.MapData.MapSize;
         for (int x = 0; x < mapSize; x++)
         { 
             for (int z = 0; z < mapSize; z++)
@@ -246,37 +247,5 @@ public class ProceduralTerrainGenerator : MonoBehaviour
             }
         }
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    if (!Application.isPlaying) return;
-    //    if (!shouldGizmos) return;
-
-    //    for (int x = 0; x < mapSize; x++)
-    //    {
-    //        for (int z = 0; z < mapSize; z++)
-    //        {
-    //            Cell cell = grid[x, z];
-    //            switch (cell.cellType)
-    //            {
-    //                case CellType.Air:
-    //                    Gizmos.color = Color.white;
-    //                    return;
-    //                case CellType.Water:
-    //                    Gizmos.color = Color.blue;
-    //                    break;
-    //                case CellType.Grass:
-    //                    Gizmos.color = Color.green;
-    //                    break;
-    //                default:
-    //                    break;
-    //            }
-    //            Vector3 pos = new Vector3(x, 0, z);
-    //            Gizmos.DrawWireCube(pos, Vector3.one);
-    //        }
-
-    //    }
-
-    //}
 }
 
