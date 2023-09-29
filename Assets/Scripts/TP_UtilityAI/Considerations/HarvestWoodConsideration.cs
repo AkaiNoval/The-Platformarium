@@ -13,14 +13,24 @@ public class HarvestWoodConsideration : UConsideration
     }
     float GetScoreBasedOnTheStoragesCapacity()
     {
+        List<Storage> storages = WorldContext.Instance.AllStorageOnTheMap;
+
+        if (storages.Count == 0)
+        {
+            return 0;
+        }
+
         int allStorageCurrentCapacity = 0;
         int allStorageMaxCapacity = 0;
-        List<Storage> storages = WorldContext.Instance.AllStorageInTheMap;
+
         foreach (Storage storage in storages)
         {
             allStorageCurrentCapacity += storage.CurrentCapacity;
             allStorageMaxCapacity += storage.MaxCapacity;
         }
-        return Score = responseCurve.Evaluate(Mathf.Clamp01(allStorageCurrentCapacity / allStorageMaxCapacity));
+
+        float normalizedCapacity = (float)allStorageCurrentCapacity / allStorageMaxCapacity;
+        return Score = responseCurve.Evaluate(Mathf.Clamp01(normalizedCapacity));
     }
+
 }

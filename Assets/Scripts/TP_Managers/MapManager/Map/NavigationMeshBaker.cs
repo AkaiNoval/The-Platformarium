@@ -9,7 +9,7 @@ public class NavigationMeshBaker : MonoBehaviour
 {
     public NavMeshSurface navMeshSurface { get; private set; }
     private void Awake() => navMeshSurface = GetComponent<NavMeshSurface>();
-    public void BakeNavMeshWhenWorldCreated()
+    public void BakeNavMeshWhenWorldChanged()
     {
         if (navMeshSurface == null) return;
         navMeshSurface.BuildNavMesh();

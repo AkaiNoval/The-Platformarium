@@ -6,11 +6,28 @@ public class Storage : Building
 {
     [SerializeField] int maxCapacity;
     [SerializeField] int currentCapacity;
-
+    [SerializeField] GameObject lowCap;
+    [SerializeField] GameObject MedCap;
+    [SerializeField] GameObject HighCap;
     public int CurrentCapacity 
     { 
-        get => currentCapacity; 
-        set => currentCapacity = Mathf.Clamp(value,0,MaxCapacity); 
+        get => currentCapacity;
+        set 
+        {
+            if(currentCapacity > (20 * maxCapacity)/100)
+            {
+                lowCap.SetActive(true);
+            }
+            if(currentCapacity > (50 * maxCapacity) / 100)
+            {
+                MedCap.SetActive(true);
+            }
+            if (currentCapacity > (70 * maxCapacity) / 100)
+            {
+                HighCap.SetActive(true);
+            }
+            currentCapacity = Mathf.Clamp(value, 0, MaxCapacity); 
+        } 
     }
     public int MaxCapacity 
     { 
@@ -22,14 +39,14 @@ public class Storage : Building
     {
         if (WorldContext.Instance != null)
         {
-            WorldContext.Instance.AllStorageInTheMap.Add(this);
+            WorldContext.Instance.AllStorageOnTheMap.Add(this);
         }
     }
     private void OnDisable()
     {
         if (WorldContext.Instance != null)
         {
-            WorldContext.Instance.AllStorageInTheMap.Remove(this);
+            WorldContext.Instance.AllStorageOnTheMap.Remove(this);
         }
     }
 }

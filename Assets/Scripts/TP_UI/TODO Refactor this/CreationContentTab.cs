@@ -10,13 +10,13 @@ public class CreationContentTab : MonoBehaviour
     [field: SerializeField] public List<SOPrototype> prototypeSOType { get; private set; }
 
     [field: SerializeField] public MaterialsInfo materialPrefab { get; private set; }
-    [field: SerializeField] public UIItemElement uIItemElement { get; private set; }
+    [field: SerializeField] public BuildingUIItemElement uIItemElement { get; private set; }
 
     public void GenerateItemElement()
     {
         for (int i = 0; i < prototypeSOType.Count; i++)
         {
-            UIItemElement instanceUIItemElement = Instantiate(uIItemElement, itemUIInfoParent);
+            BuildingUIItemElement instanceUIItemElement = Instantiate(uIItemElement, itemUIInfoParent);
             MaterialsInfo creationPointInfo = Instantiate(materialPrefab, instanceUIItemElement.rightMaterialUIInfo.transform);
 
             creationPointInfo.materialCost.text = prototypeSOType[i].creationPoint.ToString();

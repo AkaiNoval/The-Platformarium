@@ -9,7 +9,7 @@ public enum PlacementMode
     WorldEdit,
     BuildMode
 }
-public class PlacementManager : MonoBehaviour
+public class PlacementManager : Singleton<PlacementManager>
 {
     PlacementValidationSystem placementValidationSystem;
     PlacementRotator placementRotator;
@@ -26,7 +26,7 @@ public class PlacementManager : MonoBehaviour
     bool allowedToBuild;
     private List<GameObject> childCellHighLights = new List<GameObject>();
     private Cell previousCell;
-    private void Awake()
+    protected override void Awake()
     {
         placementValidationSystem = GetComponentInChildren<PlacementValidationSystem>();
         placementRotator = GetComponentInChildren<PlacementRotator>();
@@ -140,14 +140,13 @@ public class PlacementManager : MonoBehaviour
         /*When placed down the building, check 1 more*/
         CheckingForFreeOccupiedCell();
     }
-    public void GoIntoBuildModeButton()
+    public void GoIntoBuildModeButton(BuildingDataSO selectedBuilding)
     {
-        //Should be whenever player go into building state and pick a new house
-        //TODO this should change the gameManager state to building state
+        SetCurrentBuilding(selectedBuilding);
         /*Should always go backt to default rotation before getting new building preview*/
         placementRotator.SetPlacementRotationDegreesBackToDefault();
-        childCellHighLights = placementPreview.InstantiateHighlightsBasedOnBuildingSize(currentBuildingData);
-        placementPreview.InstantiateBuildingPreview(currentBuildingData);
+        childCellHighLights = placementPreview.InstantiateHighlightsBasedOnBuildingSize(selectedBuilding);
+        placementPreview.InstantiateBuildingPreview(selectedBuilding);
         CheckingForFreeOccupiedCell();
     }
 }

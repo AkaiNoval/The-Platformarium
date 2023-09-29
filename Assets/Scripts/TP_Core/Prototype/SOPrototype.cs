@@ -8,4 +8,7 @@ public class SOPrototype : ScriptableObject
     public string prototypeName;
     public int creationPoint;
     public GameObject BuildingPrefab;
+    public float MaxHealth;
+    public float MaxHunger;
+    public float MaxEnergy;
 }

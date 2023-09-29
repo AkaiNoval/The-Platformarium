@@ -11,12 +11,14 @@ public class UBrain : MonoBehaviour
     [SerializeField] private UAction[] actionsAvailable;
     public bool FinishedDeciding { get; set; }
     public bool FinishedExecutingBestAction { get; set; }
+    public GameObject NearestActionTarget { get; set; }
     private PrototypeController colonist;
     void Awake()
     {
         colonist = GetComponent<PrototypeController>();
         FinishedDeciding = false;
         FinishedExecutingBestAction = false;
+        NearestActionTarget = null;
     }
     /* Loop through all the available actions */
     /* Give the highest scoring action */

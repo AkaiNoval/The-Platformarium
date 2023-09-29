@@ -10,15 +10,15 @@ public class BuildingContentTabHolder : MonoBehaviour
     [field: SerializeField] public List<BuildingDataSO> buildingDataSOType { get; private set; }
 
     [field: SerializeField] public MaterialsInfo materialPrefab { get; private set; }
-    [field: SerializeField] public UIItemElement uIItemElement { get; private set; }
+    [field: SerializeField] public BuildingUIItemElement uIItemElement { get; private set; }
 
     public void GenerateItemElement()
     {
         for (int i = 0; i < buildingDataSOType.Count; i++)
         {
-            UIItemElement instanceUIItemElement = Instantiate(uIItemElement, itemUIInfoParent);
+            BuildingUIItemElement instanceUIItemElement = Instantiate(uIItemElement, itemUIInfoParent);
             MaterialsInfo creationPointInfo = Instantiate(materialPrefab, instanceUIItemElement.rightMaterialUIInfo.transform);
-
+            instanceUIItemElement.selectedBuilding = buildingDataSOType[i];
             creationPointInfo.materialCost.text = buildingDataSOType[i].creationPoint.ToString();
 
             instanceUIItemElement.itemName.text = buildingDataSOType[i].name;

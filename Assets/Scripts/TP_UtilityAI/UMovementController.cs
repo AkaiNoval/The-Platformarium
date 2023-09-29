@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class UMovementController : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    public NavMeshAgent agent { get; set; }
     public Transform destination { get; set; }
     public Transform RequiredDestination { get; set; }
     void Awake()

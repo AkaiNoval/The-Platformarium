@@ -13,12 +13,15 @@ public class CreationSystem : MonoBehaviour
         if (GameManager.Instance.gameState == GameState.Creating && !EventSystem.current.IsPointerOverGameObject())
         {
             mouseHighLight.SetActive(true);
-            Debug.Log("Time for world creating mode");
             SnapCurrentMousePosistionToCurrentCellPosition(mouseHighLight.transform);
             if (Input.GetMouseButtonDown(0))
             {
                 InstantiatePrototypeBasedOnCurrentSituation(currentSOPrototype);
             }
+        }
+        else
+        {
+            mouseHighLight.SetActive(false);
         }
     }
     private void SnapCurrentMousePosistionToCurrentCellPosition(Transform mouseHighLightPosition)
@@ -36,6 +39,7 @@ public class CreationSystem : MonoBehaviour
         if (currentCellInGridPosition == null) return;
         var mapGrid = MapController.Instance.ProceduralTerrain.GetMapGrid();
         if (mapGrid[currentCellInGridPosition.x, currentCellInGridPosition.y].IsThisCellOccupied()) return;
+        if (mapGrid[currentCellInGridPosition.x, currentCellInGridPosition.y].cellType != CellType.Grass) return;
         var spawnedPrototype = Instantiate(currentSOPrototype.BuildingPrefab, mouseHighLight.transform.position + new Vector3(0,0.5f,0), Quaternion.identity);
     }
 }

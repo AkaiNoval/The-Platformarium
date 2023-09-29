@@ -13,8 +13,8 @@ public class PrototypeController : MonoBehaviour
 {
     public UMovementController MoveController { get; set; }
     public UBrain UtilityBrain { get; set; }
-
-    //public ColonistStats Stats { get; set; }
+    public PrototypeAnimController PrototypeAnimController { get; set; }
+    public PrototypeStats Stats { get; set; }
 
     //public ColonistBehaviour Behaviour { get; set; }
 
@@ -23,10 +23,12 @@ public class PrototypeController : MonoBehaviour
     {
         MoveController = GetComponent<UMovementController>();
         UtilityBrain = GetComponent<UBrain>();
+        Stats = GetComponent<PrototypeStats>();
+        PrototypeAnimController = GetComponent<PrototypeAnimController>();
     }
-    private void Update()
+    private void OnEnable()
     {
-        FSMTick();
+        InvokeRepeating("FSMTick", 1f, 0.5f);
     }
     void FSMTick()
     {
@@ -53,6 +55,7 @@ public class PrototypeController : MonoBehaviour
         }
         else if (currentState == FSMState.Move)
         {
+            PrototypeAnimController.PlayAnimation(AnimKey.Walking);
             //MoveController.destination = UtilityBrain.bestAction.RequiredDestination;
             /* Calculate the distance between AI and the required destination of the best action */
             float distance = Vector3.Distance(MoveController.RequiredDestination.position, this.transform.position);
