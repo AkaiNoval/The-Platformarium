@@ -27,6 +27,7 @@ public class CreationSystem : MonoBehaviour
     private void SnapCurrentMousePosistionToCurrentCellPosition(Transform mouseHighLightPosition)
     {
         /* Get first, snap later */
+        if (mouseHighLightPosition == null) return;
         Vector3 mousePos = InputManager.Instance.GetSelectedCellPosition();
         Vector3 snappedPos = InputManager.Instance.SnapHighLightCellGOBasedOnCurrentCellPos(mousePos);
         mouseHighLightPosition.position = snappedPos;
